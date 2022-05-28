@@ -68,7 +68,6 @@ struct BrowseView: View {
                             CartItemView(sneakerInfo: sneakerInfo)
                                 .frame(width: 350, height: 150, alignment: .center)
                                 .onTapGesture {
-                                    <#code#>
                                 }
                         }
                     }
