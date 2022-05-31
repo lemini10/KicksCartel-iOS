@@ -22,6 +22,7 @@
 		A8D50C9C27DC1A7C0059D337 /* KicksCartelAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D50C9B27DC1A7C0059D337 /* KicksCartelAppUITestsLaunchTests.swift */; };
 		A8D50CA927DC1B460059D337 /* SizesSlideUpModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D50CA827DC1B460059D337 /* SizesSlideUpModal.swift */; };
 		A8D50CAB27DC2B370059D337 /* SizeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D50CAA27DC2B370059D337 /* SizeCell.swift */; };
+		A8DE7E7D2842791C008CB624 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DE7E7C2842791C008CB624 /* LaunchScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,8 @@
 		A8D50C9B27DC1A7C0059D337 /* KicksCartelAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KicksCartelAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A8D50CA827DC1B460059D337 /* SizesSlideUpModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizesSlideUpModal.swift; sourceTree = "<group>"; };
 		A8D50CAA27DC2B370059D337 /* SizeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeCell.swift; sourceTree = "<group>"; };
+		A8DE7E7C2842791C008CB624 /* LaunchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
+		A8DE7E7E2845C79E008CB624 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,7 +122,9 @@
 		A8D50C7D27DC1A7B0059D337 /* KicksCartelApp */ = {
 			isa = PBXGroup;
 			children = (
+				A8DE7E7E2845C79E008CB624 /* Info.plist */,
 				A8D50C7E27DC1A7B0059D337 /* KicksCartelAppApp.swift */,
+				A8DE7E7C2842791C008CB624 /* LaunchScreen.swift */,
 				A8368EB727E561F6003410AC /* Browse */,
 				A8D50CA827DC1B460059D337 /* SizesSlideUpModal.swift */,
 				A871E73727EEB35700B04158 /* DetailShowView.swift */,
@@ -291,6 +296,7 @@
 			files = (
 				A8D50CAB27DC2B370059D337 /* SizeCell.swift in Sources */,
 				A87DF68027E6564E00389A84 /* CartItemView.swift in Sources */,
+				A8DE7E7D2842791C008CB624 /* LaunchScreen.swift in Sources */,
 				A87DF67E27E632ED00389A84 /* ListItem.swift in Sources */,
 				A871E73A27EFA6CC00B04158 /* DetailView.swift in Sources */,
 				A8D50CA927DC1B460059D337 /* SizesSlideUpModal.swift in Sources */,
@@ -462,9 +468,9 @@
 				DEVELOPMENT_TEAM = HU5NP8XV8L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = KicksCartelApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -492,9 +498,9 @@
 				DEVELOPMENT_TEAM = HU5NP8XV8L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = KicksCartelApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

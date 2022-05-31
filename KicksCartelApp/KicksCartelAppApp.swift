@@ -11,7 +11,7 @@ import SwiftUI
 struct KicksCartelAppApp: App {
     var body: some Scene {
         WindowGroup {
-            BrowseView()
+            LaunchScreen()
         }
     }
 }
