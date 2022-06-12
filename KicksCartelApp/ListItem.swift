@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ListItemView: View {
     
-    var sneakerInfo: SneakerInfo
+    var sneakerInfo: SneakerModel
     
     @State var isPressed = false
     
@@ -65,14 +65,6 @@ struct ListItemView: View {
                     gradient: Gradient(colors: [.black, .white]),
                     startPoint: .top,
                     endPoint: .bottom))
-    }
-}
-
-struct SwiftUIView_Previews: PreviewProvider {
-    static var previews: some View {
-        ListItemView(sneakerInfo: SneakerInfo(id: UUID(), brand: "Jordan", sneakerImage: "Guava", completeName: "Jordan IV x Union LA Guava Ice", size: "8.5 Mx", price: "$180"))
-            .frame(width: 150, height: 250, alignment: .center)
-
     }
 }
 

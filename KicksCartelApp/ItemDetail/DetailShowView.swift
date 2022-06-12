@@ -9,26 +9,24 @@ import SwiftUI
 
 struct DetailShowView: View {
     
-    var imageSet: [ShoeDetail]
+    var shoeDetails: ShoeDetail
 
     var body: some View {
         ZStack {
             VStack(alignment: .leading) {
-                colorView
+                gradientBackground
                     .padding(.bottom,80)
-                Text("Jordan")
+                Text(shoeDetails.brand)
                     .font(.system(.largeTitle,design: .monospaced))
                     .fontWeight(.black)
                     .padding(.horizontal)
 
-                Text("Jordan 4 Guava Ice")
+                Text(shoeDetails.name)
                     .fontWeight(.black)
                     .font(.system(size: 50))
                     .padding(.horizontal)
                 
-                Text("""
-                    Guava Ice delivers a vibrant take on the classic silhouette. The upper combines soft pink suede with breathable mesh on the collar and toe box. Semi translucent TU wings provide structural support, taking cues from an original Tinker Hatfield sketch.
-                    """)
+                Text(shoeDetails.description)
                     .fontWeight(.light)
                     .font(.system(size: 15))
                     .padding(.horizontal)
@@ -61,8 +59,8 @@ struct DetailShowView: View {
     
     var imageShowdown: some View {
             TabView {
-                ForEach(imageSet, id: \.self) { imageSelected in
-                    Image(imageSelected.imageName)
+                ForEach(shoeDetails.imageSet, id: \.self) { imageSelected in
+                    Image(imageSelected)
                         .resizable()
                         .scaledToFit()
                 }
@@ -72,16 +70,23 @@ struct DetailShowView: View {
     }
     
     var colorView: some View {
-            Color.s800
+            Color.black
                 .cornerRadius(20, corners: [.bottomRight,.bottomLeft])
             .frame(height: UIScreen.main.bounds.size.height * 0.3)
+    }
+    
+    var gradientBackground: some View {
+        Color.clear
+            .background(
+                    LinearGradient(gradient: Gradient(colors: [.black, .white]), startPoint: .top, endPoint: .bottom)
+                )
     }
     
     var imageView: some View {
         VStack {
             TabView {
-                ForEach(imageSet, id: \.self) { imageSelected in
-                    Image(imageSelected.imageName)
+                ForEach(shoeDetails.imageSet, id: \.self) { imageSelected in
+                    Image(imageSelected)
                         .resizable()
                         .scaledToFit()
                 }
@@ -95,13 +100,30 @@ struct DetailShowView: View {
 
 struct DetailShowView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailShowView(imageSet: [
-            ShoeDetail(imageName: "Guava"),
-            ShoeDetail(imageName: "Guava"),
-            ShoeDetail(imageName: "Guava")])
+        DetailShowView(shoeDetails:
+            ShoeDetail(
+                imageSet: ["Guava", "Guava","Guava"],
+                brand: "Jordan",
+                name: "Jordan 4 Guava Ice",
+                description: """
+                    Guava Ice delivers a vibrant take on the classic silhouette. The upper combines soft pink suede with breathable mesh on the collar and toe box. Semi translucent TU wings provide structural support, taking cues from an original Tinker Hatfield sketch.
+                    """,
+            price: 180.00,
+            shoppingStatus: .liked))
     }
 }
 
 struct ShoeDetail: Hashable {
-    var imageName: String
+    var imageSet: [String]
+    var brand: String
+    var name: String
+    var description: String
+    var price: Double
+    var shoppingStatus: ShoppingStatus
+}
+
+enum ShoppingStatus {
+    case inCart
+    case liked
+    case empty
 }

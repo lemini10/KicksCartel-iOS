@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CartItemView: View {
     
-    var sneakerInfo: SneakerInfo
+    var sneakerInfo: SneakerModel
 
     var body: some View {
         HStack {
@@ -73,12 +73,5 @@ struct CartItemView: View {
                 .resizable()
                 .scaledToFit()
         }
-    }
-}
-
-struct CartItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        CartItemView(sneakerInfo: SneakerInfo(id: UUID(), brand: "Jordan", sneakerImage: "Guava", completeName: "Jordan IV x Union LA Guava Ice", size: "8.5 Mx", price: "$180"))
-            .frame(width: 350, height: 150, alignment: .center)
     }
 }

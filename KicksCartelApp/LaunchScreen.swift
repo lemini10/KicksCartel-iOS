@@ -13,7 +13,7 @@ struct LaunchScreen: View {
     var body: some View {
         NavigationView {
             ZStack {
-                NavigationLink(destination: BrowseView(),
+                NavigationLink(destination: Wireframe.createBrowseView(),
                                isActive: $isReadyToNavigate) { EmptyView() }
                 Color.black
                 Image("Logo")

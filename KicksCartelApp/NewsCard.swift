@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NewsCard: View {
-    var newsInfo: NewsInfo
+    var newsInfo: NewsModel
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
             imageSet
@@ -37,7 +37,7 @@ struct NewsCard: View {
     var infoView: some View {
         HStack {
             VStack(alignment: .leading, spacing: 10) {
-                Text(newsInfo.subtitle)
+                Text(newsInfo.details)
                     .font(.system(.body,design: .rounded))
                     .foregroundColor(.secondary)
                     .fontWeight(.black)
@@ -59,40 +59,4 @@ struct NewsCard: View {
                 .scaledToFit()
         }
     }
-}
-
-struct NewsCard_Previews: PreviewProvider {
-    
-    
-    static var previews: some View {
-        NewsCard(newsInfo: NewsInfo(id: UUID(), title: "Jordan Chicago Restocking 2022", subtitle: "Nike", image: "Guava"))
-            .padding()
-            .frame(width: .infinity, height: 400, alignment: .center)
-    }
-}
-
-extension Color {
-    public static var purpleGradient: Color {
-        return Color(UIColor(red: 54/255, green: 0/255, blue: 51/255, alpha: 1.0))
-    }
-    
-    public static var blueGradient: Color {
-        return Color(UIColor(red: 11/255, green: 135/255, blue: 147/255, alpha: 1.0))
-    }
-}
-
-struct SneakerInfo: Identifiable{
-    var id: UUID    
-    var brand: String
-    var sneakerImage: String
-    var completeName: String
-    var size: String
-    var price: String
-}
-
-struct NewsInfo: Identifiable{
-    var id: UUID
-    var title: String
-    var subtitle: String
-    var image: String
 }
