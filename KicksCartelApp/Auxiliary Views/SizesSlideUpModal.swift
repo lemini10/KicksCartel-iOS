@@ -102,16 +102,6 @@ struct ShoeInfo: Identifiable, Hashable {
     var size: String
 }
 
-extension Color {
-    public static var s700: Color {
-        return Color(UIColor(red: 0.325, green: 0.502, blue: 0.718, alpha: 1))
-    }
-    
-    public static var s800: Color {
-        return Color(UIColor(red: 0.204, green: 0.353, blue: 0.576, alpha: 1))
-    }
-}
-
 struct RoundedCorner: Shape {
     
     var radius: CGFloat = .infinity

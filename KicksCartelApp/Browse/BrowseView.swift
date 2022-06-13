@@ -58,7 +58,7 @@ struct BrowseView: View {
             }
         }
         .navigationBarHidden(true)
-        .padding(.leading, 30)
+        .padding(.leading, 20)
     }
 }
 

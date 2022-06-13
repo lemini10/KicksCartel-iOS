@@ -76,9 +76,9 @@ enum Screens: String {
         case .Browse:
             return "house"
         case .Favorites:
-            return "magnifyingglass"
-        case .Search:
             return "star"
+        case .Search:
+            return "magnifyingglass"
         case .Cart:
             return "cart"
         case .Profile:

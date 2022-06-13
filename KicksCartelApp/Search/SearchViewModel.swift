@@ -6,3 +6,12 @@
 //
 
 import Foundation
+import Combine
+
+protocol SearchViewModelProtocol: ObservableObject {
+    var searchText: String { get set}
+}
+
+class SearchViewModel: SearchViewModelProtocol {
+    @Published var searchText: String = ""
+}
