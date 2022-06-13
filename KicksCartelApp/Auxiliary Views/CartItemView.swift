@@ -20,7 +20,7 @@ struct CartItemView: View {
             infoView
                 .frame(maxHeight: .infinity)
         }
-        
+        .frame(height:150)
         .cornerRadius(15)
         .overlay(
         RoundedRectangle(cornerRadius: 15)
