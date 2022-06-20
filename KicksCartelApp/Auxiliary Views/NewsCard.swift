@@ -15,13 +15,7 @@ struct NewsCard: View {
             infoView
                 .padding(10)
         }
-        .frame(maxWidth: .infinity)
-        .cornerRadius(15)
-        .overlay(
-        RoundedRectangle(cornerRadius: 15)
-        .stroke(Color(.sRGB, red: 150/255, green: 150/255, blue: 150/255,
-        opacity: 0.3), lineWidth: 3)
-                )
+        .cardStyle()
         
     }
     

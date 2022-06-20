@@ -10,7 +10,6 @@ import SwiftUI
 struct BrowseView: View {
     
     var browseViewModel: BrowseViewModelProtocol
-    
 
     var body: some View {
         ScrollView {

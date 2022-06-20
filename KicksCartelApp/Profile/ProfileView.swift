@@ -8,13 +8,39 @@
 import SwiftUI
 
 struct ProfileView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+    
+    var screenWidth = UIScreen.main.bounds.width
+    var screenHeight = UIScreen.main.bounds.height
 
-struct ProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProfileView()
+    var body: some View {
+        VStack {
+            profilePic
+            ProfileRow(desiredRow: .Profile)
+                .cardStyle()
+                .padding(.horizontal)
+            ProfileRow(desiredRow: .Buying)
+                .cardStyle()
+                .padding(.horizontal)
+            ProfileRow(desiredRow: .Shipping)
+                .cardStyle()
+                .padding(.horizontal)
+            ProfileRow(desiredRow: .Payments)
+                .cardStyle()
+                .padding(.horizontal)
+            ProfileRow(desiredRow: .Answers)
+                .cardStyle()
+                .padding(.horizontal)
+        }
+    }
+    
+    var profilePic: some View {
+        Image("Guava")
+            .resizable()
+            .background(
+                    LinearGradient(gradient: Gradient(colors: [.black, .white]), startPoint: .top, endPoint: .bottom)
+                )
+            .cornerRadius(15)
+            .frame(height: screenHeight * 0.35)
+            .padding(.horizontal)
     }
 }
