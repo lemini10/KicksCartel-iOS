@@ -7,12 +7,36 @@
 
 import SwiftUI
 
-struct ProfileView: View {
+struct ProfileView<ViewModel: ProfileViewModelProtocol>: View {
+    
+    @StateObject var viewModel: ViewModel
     
     var screenWidth = UIScreen.main.bounds.width
     var screenHeight = UIScreen.main.bounds.height
-
+    
     var body: some View {
+        ZStack {
+            if viewModel.isUserRegistered {
+                loggedView
+            } else {
+                loginView
+            }
+        }
+        .onAppear {
+            viewModel.onAppear()
+        }
+    }
+    
+    var loginView: some View {
+        ProfileLoginView(
+            email: $viewModel.email,
+            password: $viewModel.password,
+            selectedIndex: $viewModel.selectedIndex,
+            doLogin: { viewModel.doLogin() },
+            doRegister: { viewModel.doRegister()})
+    }
+    
+    var loggedView: some View {
         VStack {
             profilePic
             ProfileRow(desiredRow: .Profile)
@@ -30,6 +54,9 @@ struct ProfileView: View {
             ProfileRow(desiredRow: .Answers)
                 .cardStyle()
                 .padding(.horizontal)
+            Button("Cerrar sesión") {
+                viewModel.doLogOut()
+            }
         }
     }
     
@@ -37,8 +64,8 @@ struct ProfileView: View {
         Image("Guava")
             .resizable()
             .background(
-                    LinearGradient(gradient: Gradient(colors: [.black, .white]), startPoint: .top, endPoint: .bottom)
-                )
+                LinearGradient(gradient: Gradient(colors: [.black, .white]), startPoint: .top, endPoint: .bottom)
+            )
             .cornerRadius(15)
             .frame(height: screenHeight * 0.35)
             .padding(.horizontal)

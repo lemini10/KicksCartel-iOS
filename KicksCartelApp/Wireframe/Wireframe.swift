@@ -34,8 +34,8 @@ class Wireframe {
     }
     
     static func createProfileView() -> some View {
-        let viewModel: BrowseViewModelProtocol = BrowseViewModel()
-        let view: ProfileView = ProfileView()
+        let viewModel: ProfileViewModel = ProfileViewModel()
+        let view: ProfileView = ProfileView(viewModel: viewModel)
         return view
     }
 }
