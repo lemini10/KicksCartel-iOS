@@ -10,26 +10,26 @@ import SwiftUI
 
 class Wireframe {
     static func createBrowseView() -> some View {
-        let viewModel: BrowseViewModelProtocol = BrowseViewModel()
+        let viewModel: BrowseViewModel = BrowseViewModel()
         let view: BrowseView = BrowseView(browseViewModel: viewModel)
         return view
     }
     
     static func createFavoritesView() -> some View {
-        let viewModel: BrowseViewModelProtocol = BrowseViewModel()
+        let viewModel: BrowseViewModel = BrowseViewModel()
         let view: FavoritesView = FavoritesView()
         return view
     }
     
     static func createSearchView() -> some View {
-        let viewModel: BrowseViewModelProtocol = BrowseViewModel()
+        let viewModel: BrowseViewModel = BrowseViewModel()
         let view: SearchView = SearchView()
         return view
     }
     
     static func createCartView() -> some View {
-        let viewModel: BrowseViewModelProtocol = BrowseViewModel()
-        let view: CartView = CartView()
+        let viewModel: CartViewModel = CartViewModel()
+        let view: CartView = CartView(viewModel: viewModel)
         return view
     }
     

@@ -6,12 +6,19 @@
 //
 
 import SwiftUI
+import Combine
 
 struct CartView: View {
+    
+    @ObservedObject var viewModel: CartViewModel
     var body: some View {
         ScrollView {
             VStack {
-                CartItemView(sneakerInfo: SneakerModel(id: UUID(), brand: "Jordan", sneakerImage: "Guava", completeName: "Jordan 4 Guava Ice", size: "10.5", price: "180USD"))
+                CartItemView(sneakerInfo: CONSTANTS.sneakerModel)
+                
+                Button("Checkout") {
+                    viewModel.continueButtonPressed()
+                }
             }
         }
         .padding()

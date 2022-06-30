@@ -10,7 +10,6 @@ import SwiftUI
 struct SizesSlideUpModal: View {
     
     var availablesSizes: [[ShoeInfo]]
-    var selectedSize: Double?
     
     var body: some View {
         VStack(spacing: 20) {

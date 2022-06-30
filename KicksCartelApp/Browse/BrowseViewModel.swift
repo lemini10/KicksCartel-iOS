@@ -7,13 +7,16 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
-protocol BrowseViewModelProtocol {
+protocol BrowseViewModelProtocol: ObservableObject {
     var constants: BrowseConstants { get }
     func fetchItems() -> BrowseModel
 }
 
 class BrowseViewModel: BrowseViewModelProtocol {
+    
+    @Published var isDetailViewPresented: Bool = false
     let constants: BrowseConstants = BrowseConstants()
     
     func fetchItems() -> BrowseModel {
@@ -23,11 +26,14 @@ class BrowseViewModel: BrowseViewModelProtocol {
     }
     
     var sneakersArray: [SneakerModel] = [
-        SneakerModel(id: UUID(), brand: "Jordan", sneakerImage: "Guava", completeName: "Jordan IV x Union LA Guava Ice", size: "8.5 Mx", price: "$180"),
-        SneakerModel(id: UUID(), brand: "Jordan", sneakerImage: "Guava", completeName: "Jordan IV x Union LA Guava Ice", size: "8.5 Mx", price: "$180"),
-        SneakerModel(id: UUID(), brand: "Jordan", sneakerImage: "Guava", completeName: "Jordan IV x Union LA Guava Ice", size: "8.5 Mx", price: "$180"),
-        SneakerModel(id: UUID(), brand: "Jordan", sneakerImage: "Guava", completeName: "Jordan IV x Union LA Guava Ice", size: "8.5 Mx", price: "$180"),
-        SneakerModel(id: UUID(), brand: "Jordan", sneakerImage: "Guava", completeName: "Jordan IV x Union LA Guava Ice", size: "8.5 Mx", price: "$180")]
+        CONSTANTS.sneakerModel,
+        CONSTANTS.sneakerModel,
+        CONSTANTS.sneakerModel,
+        CONSTANTS.sneakerModel,
+        CONSTANTS.sneakerModel,
+        CONSTANTS.sneakerModel,
+        CONSTANTS.sneakerModel,
+    ]
     
     var newsArray: [NewsModel] = [NewsModel(image: "Guava", title: "Jordan Chicago Restocking 2022", details: "Nike"),
                                   NewsModel(image: "Guava", title: "Jordan Chicago Restocking 2022", details: "Nike"),
@@ -43,3 +49,5 @@ class BrowseConstants {
     var secondaryCardHeight: CGFloat = 250
     var secondaryCardWidth: CGFloat = 150
 }
+
+

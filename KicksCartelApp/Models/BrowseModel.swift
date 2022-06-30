@@ -19,11 +19,20 @@ struct NewsModel: Identifiable {
     var details: String
 }
 
-struct SneakerModel: Identifiable{
+struct SneakerModel: Identifiable {
     var id: UUID
     var brand: String
+    var imageSet: [String]
     var sneakerImage: String
     var completeName: String
+    var description: String
     var size: String
     var price: String
+    var shoppingStatus: ShoppingStatus
+}
+
+enum ShoppingStatus {
+    case inCart
+    case liked
+    case empty
 }

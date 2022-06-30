@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import Combine
 
 struct BrowseView: View {
     
-    var browseViewModel: BrowseViewModelProtocol
+    @ObservedObject var browseViewModel: BrowseViewModel
 
     var body: some View {
         ScrollView {
@@ -36,6 +37,12 @@ struct BrowseView: View {
                         ForEach(browseViewModel.fetchItems().items) { sneakerInfo in
                             ListItemView(sneakerInfo: sneakerInfo)
                                 .frame(width: browseViewModel.constants.secondaryCardWidth, height: browseViewModel.constants.secondaryCardHeight, alignment: .center)
+                                .onTapGesture(perform: {
+                                    browseViewModel.isDetailViewPresented = true
+                                })
+                                .fullScreenCover(isPresented: $browseViewModel.isDetailViewPresented) {
+                                    DetailShowView(viewModel: DetailViewModel(shoeDetails: sneakerInfo))
+                                }
                         }
                     }
                 }

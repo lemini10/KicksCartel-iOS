@@ -11,7 +11,7 @@ struct FavoritesView: View {
     var body: some View {
         ScrollView {
             VStack {
-                CartItemView(sneakerInfo: SneakerModel(id: UUID(), brand: "Jordan", sneakerImage: "Guava", completeName: "Jordan 4 Guava Ice", size: "10.5", price: "180USD"))
+                CartItemView(sneakerInfo: CONSTANTS.sneakerModel)
             }
         }
         .padding()
