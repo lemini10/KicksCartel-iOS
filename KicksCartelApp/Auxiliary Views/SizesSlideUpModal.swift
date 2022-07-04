@@ -6,22 +6,46 @@
 //
 
 import SwiftUI
+import Combine
 
 struct SizesSlideUpModal: View {
     
-    var availablesSizes: [[ShoeInfo]]
+    @Binding var isOpen: Bool
+    
+    let data: [ShoeInfo]
+    let columns = [
+        GridItem(.adaptive(minimum: 80))
+    ]
+    
+    var selectedSizeAction: ((String) -> Void)
     
     var body: some View {
-        VStack(spacing: 20) {
-            headerSection
-            SizeView(shoeInfo: availablesSizes)
+        GeometryReader { screen in
+            ZStack(alignment: .bottom) {
+                if isOpen {
+                    backgroundDismissable
+                    VStack {
+                        headerSection
+                        sizesGridView
+                    }
+                    .background(Color.white)
+                    .animation(.interpolatingSpring(stiffness: 200.00, damping: 25.0, initialVelocity: 0.2))
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
         }
-        .background(Color.s800)
-        .cornerRadius(30, corners: [.topLeft, .topRight])
     }
     
     // MARK:- Auxialiary Views
     
+    var backgroundDismissable: some View {
+        Color.gray
+            .opacity(0.4)
+            .ignoresSafeArea()
+            .onTapGesture {
+                isOpen = false
+            }
+    }
     var headerSection: some View {
         HStack {
             Text("Available sizes")
@@ -31,45 +55,45 @@ struct SizesSlideUpModal: View {
             Button("Size Chart", action: {
             })
         }
-        .foregroundColor(.white)
+        .foregroundColor(.black)
         .padding()
+    }
+    
+    var sizesGridView: some View {
+        LazyVGrid(columns: columns, spacing: 20) {
+            ForEach(data, id: \.self) { shoe in
+                IndividualSize(size: shoe.size , isAvailable: shoe.isAvailable)
+                    .onTapGesture {
+                        selectedSizeAction(shoe.size)
+                    }
+                    .disabled(!shoe.isAvailable)
+            }
+        }
+        .padding(.horizontal)
     }
 }
 
-struct SizeView: View {
-    
-    var shoeInfo: [[ShoeInfo]]
-    
-    var body: some View {
-        VStack {
-            ForEach(shoeInfo, id: \.self) { array in
-                HStack {
-                    ForEach(array, id: \.self) { shoeInformation in
-                        IndividualSize(shoeInformation: shoeInformation)
-                    }
-                }
-            }
-        }
+struct SlideUp_Preview: PreviewProvider {
+    static var previews: some View {
+        SizesSlideUpModal(isOpen: .constant(true), data: ShoeSizes.man, selectedSizeAction: { selectedSize in
+            print(selectedSize)
+            
+        })
     }
 }
 
 struct IndividualSize: View {
     
-    var shoeInformation: ShoeInfo
+    var size: String
+    var isAvailable: Bool
     
     var body: some View {
-        Text(String(shoeInformation.size))
+        Text(size)
             .frame(width: 60, height: 60, alignment: .center)
-            .background(shoeInformation.isAvailable ? Color.s700 : Color.gray)
+            .background(isAvailable ? Color.s700 : Color.gray)
             .foregroundColor(.white)
             .cornerRadius(15)
             .font(.system(size: 25))
-    }
-}
-
-struct SizesSlideUpModal_Previews: PreviewProvider {
-    static var previews: some View {
-        SizesSlideUpModal(availablesSizes: ShoeSizes.man.chunked(into: 5))
     }
 }
 
@@ -91,7 +115,10 @@ struct ShoeSizes {
         ShoeInfo(id: UUID(), isAvailable: true, size: "8 1/2"),
         ShoeInfo(id: UUID(), isAvailable: true, size: "9"),
         ShoeInfo(id: UUID(), isAvailable: true, size: "9 1/2"),
-        ShoeInfo(id: UUID(), isAvailable: true, size: "10")
+        ShoeInfo(id: UUID(), isAvailable: true, size: "10"),
+        ShoeInfo(id: UUID(), isAvailable: true, size: "10 1/2"),
+        ShoeInfo(id: UUID(), isAvailable: true, size: "11 1/2"),
+        ShoeInfo(id: UUID(), isAvailable: true, size: "12")
     ]
 }
 

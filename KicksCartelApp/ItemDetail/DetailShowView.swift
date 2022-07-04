@@ -14,9 +14,20 @@ struct DetailShowView: View {
     @ObservedObject var viewModel: DetailViewModel
     
     var body: some View {
-        VStack {
-            imageShowdown
-            detailsView
+        ZStack {
+            EmptyView()
+                .onTapGesture {
+                    viewModel.sizeSlideUpPresented = false
+                }
+            VStack {
+                imageShowdown
+                detailsView
+            }
+            SizesSlideUpModal(isOpen: $viewModel.sizeSlideUpPresented, data: ShoeSizes.man, selectedSizeAction: { selectedSize in
+                print(selectedSize)
+                viewModel.sizeSlideUpPresented = false
+            })
+            
         }
     }
     
@@ -46,7 +57,7 @@ struct DetailShowView: View {
                     Button {
                         self.presentationMode.wrappedValue.dismiss()
                     } label: {
-                        Image(systemName: "arrowshape.turn.up.backward.fill")
+                        Image(systemName: viewModel.constants.backwardsIcon)
                             .resizable()
                             .frame(width: 30, height: 30)
                             .padding(.top, 35)
@@ -54,6 +65,16 @@ struct DetailShowView: View {
                             .foregroundColor(.white)
                     }
                     Spacer()
+                    Button {
+                        //TODO: - SHARE ITEM ACTION
+                    } label: {
+                        Image(systemName: viewModel.constants.shareIcon)
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .padding(.top, 35)
+                            .padding(.trailing, 35)
+                            .foregroundColor(.white)
+                    }
                 }
                 TabView {
                     ForEach(viewModel.shoeDetails.imageSet, id: \.self) { imageSelected in
@@ -77,9 +98,6 @@ struct DetailShowView: View {
             Button("Add to cart") {
                 viewModel.sizeSlideUpPresented = true
             }
-            .fullScreenCover(isPresented: $viewModel.sizeSlideUpPresented, content: {
-                SizesSlideUpModal(availablesSizes: CONSTANTS.dummyAvailableSizes)
-            })
             .frame(width: 250, height: 50, alignment: .center)
             .background(Color.s800)
             .foregroundColor(.white)
