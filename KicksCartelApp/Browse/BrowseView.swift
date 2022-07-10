@@ -34,14 +34,14 @@ struct BrowseView: View {
                 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 20) {
-                        ForEach(browseViewModel.fetchItems().items) { sneakerInfo in
-                            ListItemView(sneakerInfo: sneakerInfo)
+                        ForEach($browseViewModel.fetchedSneakers) { sneakerInfo in
+                            ListItemView(sneakerInfo: sneakerInfo.wrappedValue)
                                 .frame(width: browseViewModel.constants.secondaryCardWidth, height: browseViewModel.constants.secondaryCardHeight, alignment: .center)
                                 .onTapGesture(perform: {
                                     browseViewModel.isDetailViewPresented = true
                                 })
                                 .fullScreenCover(isPresented: $browseViewModel.isDetailViewPresented) {
-                                    DetailShowView(viewModel: DetailViewModel(shoeDetails: sneakerInfo))
+                                    DetailShowView(viewModel: DetailViewModel(shoeDetails: CONSTANTS.sneakerModel))
                                 }
                         }
                     }
@@ -63,13 +63,10 @@ struct BrowseView: View {
                 }
             }
         }
+        .onAppear(perform: {
+            browseViewModel.onAppear()
+        })
         .navigationBarHidden(true)
         .padding(.leading, 20)
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        BrowseView(browseViewModel: BrowseViewModel())
     }
 }

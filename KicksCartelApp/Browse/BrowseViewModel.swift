@@ -11,13 +11,30 @@ import Combine
 
 protocol BrowseViewModelProtocol: ObservableObject {
     var constants: BrowseConstants { get }
-    func fetchItems() -> BrowseModel
+    func onAppear()
 }
 
 class BrowseViewModel: BrowseViewModelProtocol {
     
     @Published var isDetailViewPresented: Bool = false
+    @Published var fetchedSneakers: [FetchedSneaker] = []
+    
+    var cancellables: Set<AnyCancellable> = Set()
     let constants: BrowseConstants = BrowseConstants()
+    
+    func onAppear() {
+        RemoteDataManager.shared.fetchSneakers().sink { completion in
+            switch completion {
+            case .finished:
+                print("Fetched successfully")
+            case .failure(let error):
+                print(error)
+            }
+        } receiveValue: { fetchedSneakersArray in
+            self.fetchedSneakers = fetchedSneakersArray
+        }
+        .store(in: &cancellables)
+    }
     
     func fetchItems() -> BrowseModel {
         return BrowseModel(
@@ -40,7 +57,7 @@ class BrowseViewModel: BrowseViewModelProtocol {
                                   NewsModel(image: "Guava", title: "Jordan Chicago Restocking 2022", details: "Nike"),
                                   NewsModel(image: "Guava", title: "Jordan Chicago Restocking 2022", details: "Nike"),
                                   NewsModel(image: "Guava", title: "Jordan Chicago Restocking 2022", details: "Nike")
-                                 ]
+    ]
 }
 
 class BrowseConstants {

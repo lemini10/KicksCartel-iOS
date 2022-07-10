@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ListItemView: View {
     
-    var sneakerInfo: SneakerModel
+    var sneakerInfo: FetchedSneaker
     
     @State var isPressed = false
     
