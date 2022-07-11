@@ -28,26 +28,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A8D50C8A27DC1A7C0059D337"
-               BuildableName = "KicksCartelAppTests.xctest"
-               BlueprintName = "KicksCartelAppTests"
-               ReferencedContainer = "container:KicksCartelApp.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A8D50C9427DC1A7C0059D337"
-               BuildableName = "KicksCartelAppUITests.xctest"
-               BlueprintName = "KicksCartelAppUITests"
-               ReferencedContainer = "container:KicksCartelApp.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

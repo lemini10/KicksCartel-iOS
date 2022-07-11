@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CartItemView: View {
     
-    var sneakerInfo: SneakerModel
+    var sneakerInfo: FetchedSneaker
 
     var body: some View {
         HStack {
@@ -51,7 +51,7 @@ struct CartItemView: View {
                     .lineLimit(2)
 
                 HStack {
-                    Text(sneakerInfo.size)
+                    Text("10.5")
                         .font(.system(.body))
                         .fontWeight(.black)
                         .foregroundColor(.secondary)

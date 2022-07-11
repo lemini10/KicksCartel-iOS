@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NewsCard: View {
-    var newsInfo: NewsModel
+    var newsInfo: FetchedNews
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
             imageSet
@@ -31,7 +31,7 @@ struct NewsCard: View {
     var infoView: some View {
         HStack {
             VStack(alignment: .leading, spacing: 10) {
-                Text(newsInfo.details)
+                Text(newsInfo.categorie)
                     .font(.system(.body,design: .rounded))
                     .foregroundColor(.secondary)
                     .fontWeight(.black)

@@ -12,15 +12,18 @@ import Combine
 class RemoteDataManager {
     
     static var shared: RemoteDataManager = RemoteDataManager()
-    private let decoder = JSONDecoder()
     
+    init() {
+        ref = Database.database().reference()
+    }
+    private let decoder = JSONDecoder()
+    var ref: DatabaseReference!
+
     func fetchSneakers() -> Future<[FetchedSneaker], Error> {
         return Future { promise in
-            var ref: DatabaseReference!
-            ref = Database.database().reference()
             var fetchedSneakers: [FetchedSneaker] = []
             
-            ref.child("Sneakers").getData(completion:  { error, snapshot in
+            self.ref.child("Sneakers").getData(completion:  { error, snapshot in
                 guard error == nil else {
                     print(error!.localizedDescription)
                     return
@@ -42,13 +45,11 @@ class RemoteDataManager {
         }
     }
     
-    func fetchNews() -> Future<[FetchedSneaker], Error> {
+    func fetchNews() -> Future<[FetchedNews], Error> {
         return Future { promise in
-            var ref: DatabaseReference!
-            ref = Database.database().reference()
-            var fetchedSneakers: [FetchedSneaker] = []
+            var fetchedSneakers: [FetchedNews] = []
             
-            ref.child("Sneakers").getData(completion:  { error, snapshot in
+            self.ref.child("News").getData(completion:  { error, snapshot in
                 guard error == nil else {
                     print(error!.localizedDescription)
                     return
@@ -59,7 +60,7 @@ class RemoteDataManager {
                     let sneakerModel = json[id]
                     do {
                         let sneakerData = try JSONSerialization.data(withJSONObject: sneakerModel)
-                        let sneakerFetched = try self.decoder.decode(FetchedSneaker.self, from: sneakerData)
+                        let sneakerFetched = try self.decoder.decode(FetchedNews.self, from: sneakerData)
                         fetchedSneakers.append(sneakerFetched)
                     } catch {
                         promise(.failure(error))
@@ -77,4 +78,11 @@ struct FetchedSneaker: Decodable, Identifiable {
     var sneakerImage: String
     var completeName: String
     var price: String
+}
+
+struct FetchedNews: Decodable, Identifiable {
+    var id: String { self.image }
+    var categorie: String
+    var image: String
+    var title: String
 }

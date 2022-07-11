@@ -18,15 +18,21 @@ class BrowseViewModel: BrowseViewModelProtocol {
     
     @Published var isDetailViewPresented: Bool = false
     @Published var fetchedSneakers: [FetchedSneaker] = []
+    @Published var fetchedNews: [FetchedNews] = []
     
     var cancellables: Set<AnyCancellable> = Set()
     let constants: BrowseConstants = BrowseConstants()
     
     func onAppear() {
+        fetchSneakers()
+        fetchNews()
+    }
+    
+    func fetchSneakers(){
         RemoteDataManager.shared.fetchSneakers().sink { completion in
             switch completion {
             case .finished:
-                print("Fetched successfully")
+                print("Fetched snekaers successfully")
             case .failure(let error):
                 print(error)
             }
@@ -36,12 +42,20 @@ class BrowseViewModel: BrowseViewModelProtocol {
         .store(in: &cancellables)
     }
     
-    func fetchItems() -> BrowseModel {
-        return BrowseModel(
-            news: newsArray,
-            items: sneakersArray)
+    func fetchNews() {
+        RemoteDataManager.shared.fetchNews().sink { completion in
+            switch completion {
+            case .finished:
+                print("Fetched news successfully")
+            case .failure(let error):
+                print(error)
+            }
+        } receiveValue: { fetchedSneakersArray in
+            self.fetchedNews = fetchedSneakersArray
+        }
+        .store(in: &cancellables)
     }
-    
+
     var sneakersArray: [SneakerModel] = [
         CONSTANTS.sneakerModel,
         CONSTANTS.sneakerModel,
@@ -65,6 +79,7 @@ class BrowseConstants {
     var principalCardWidth: CGFloat = 300
     var secondaryCardHeight: CGFloat = 250
     var secondaryCardWidth: CGFloat = 150
+    var categoriesArray: [ApparealCategorie] = [.sneakers, .slides, .beanies, .shirts, .collectibles]
 }
 
 
