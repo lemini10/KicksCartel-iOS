@@ -16,8 +16,8 @@ class Wireframe {
     }
     
     static func createFavoritesView() -> some View {
-        let viewModel: BrowseViewModel = BrowseViewModel()
-        let view: FavoritesView = FavoritesView()
+        let viewModel: FavoritesViewModel = FavoritesViewModel()
+        let view: FavoritesView = FavoritesView(viewModel: viewModel)
         return view
     }
     

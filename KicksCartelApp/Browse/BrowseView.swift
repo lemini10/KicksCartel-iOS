@@ -18,6 +18,7 @@ struct BrowseView: View {
                 newsView
                 categoriesView
                 itemsView
+                brandsView
                 recentlyViewedItems
             }
         }
@@ -71,15 +72,42 @@ struct BrowseView: View {
     
     var itemsView: some View {
         VStack(alignment: .leading, spacing: 15) {
-            Text("Items one")
+            Text("Popular now")
                 .font(.system(.largeTitle,design: .monospaced))
                 .fontWeight(.black)
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 20) {
                     ForEach($browseViewModel.fetchedSneakers) { sneakerInfo in
-                        ListItemView(sneakerInfo: sneakerInfo.wrappedValue)
+                        ListItemView(sneakerInfo: sneakerInfo.wrappedValue, addToFavoritesClosure: {
+                            browseViewModel.addToFavorites(item: sneakerInfo.wrappedValue)
+                        }, removeFromFavoritesClosure: {
+                            browseViewModel.removeFromFavorites(item: sneakerInfo.wrappedValue)
+                        })
                             .frame(width: browseViewModel.constants.secondaryCardWidth, height: browseViewModel.constants.secondaryCardHeight, alignment: .center)
+                            .onTapGesture(perform: {
+                                browseViewModel.isDetailViewPresented = true
+                            })
+                            .fullScreenCover(isPresented: $browseViewModel.isDetailViewPresented) {
+                                DetailShowView(viewModel: DetailViewModel(shoeDetails: CONSTANTS.sneakerModel))
+                            }
+                    }
+                }
+            }
+        }
+    }
+    
+    var brandsView: some View {
+        VStack(alignment: .leading, spacing: 15) {
+            Text("Brands")
+                .font(.system(.largeTitle,design: .monospaced))
+                .fontWeight(.black)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 20) {
+                    ForEach(browseViewModel.constants.brandsArray) { brand in
+                        BrandCard(brand: brand)
+                            .frame(width: 300, height: 150 , alignment: .center)
                             .onTapGesture(perform: {
                                 browseViewModel.isDetailViewPresented = true
                             })
@@ -101,10 +129,10 @@ struct BrowseView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 20) {
                     ForEach($browseViewModel.fetchedSneakers) { sneakerInfo in
-                        CartItemView(sneakerInfo: sneakerInfo.wrappedValue)
+                        CartItemView(sneakerInfo: sneakerInfo.wrappedValue, completion: {
+                            
+                        })
                             .frame(width: 350, height: 150, alignment: .center)
-                            .onTapGesture {
-                            }
                     }
                 }
             }

@@ -10,22 +10,21 @@ import SwiftUI
 struct CartItemView: View {
     
     var sneakerInfo: FetchedSneaker
+    let completion: (()->Void)?
 
     var body: some View {
         HStack {
             imageSet
                 .cornerRadius(15)
                 .padding()
-                .frame(maxHeight: .infinity)
             infoView
-                .frame(maxHeight: .infinity)
         }
-        .frame(height:150)
+        .frame(height:140)
         .cornerRadius(15)
         .overlay(
-        RoundedRectangle(cornerRadius: 15)
-        .stroke(Color(.sRGB, red: 150/255, green: 150/255, blue: 150/255,
-        opacity: 0.3), lineWidth: 3))
+            RoundedRectangle(cornerRadius: 15)
+                .stroke(Color(.sRGB, red: 150/255, green: 150/255, blue: 150/255,
+                              opacity: 0.3), lineWidth: 3))
     }
     
     //MARK:- Auxiliary Views
@@ -49,7 +48,7 @@ struct CartItemView: View {
                     .font(.system(.body,design: .rounded))
                     .fontWeight(.black)
                     .lineLimit(2)
-
+                
                 HStack {
                     Text("10.5")
                         .font(.system(.body))
@@ -57,10 +56,14 @@ struct CartItemView: View {
                         .foregroundColor(.secondary)
                         .lineLimit(1)
                     Spacer()
-                    DeleteButton()
+                    DeleteButton(completion: {
+                        completion?()
+                        
+                    })
                         .padding(.trailing, 10)
+                    
                 }
-
+                
             }
             Spacer()
         }

@@ -55,6 +55,14 @@ class BrowseViewModel: BrowseViewModelProtocol {
         }
         .store(in: &cancellables)
     }
+    
+    func addToFavorites(item: FetchedSneaker) {
+        RemoteDataManager.shared.addToFavorites(item: item)
+    }
+    
+    func removeFromFavorites(item: FetchedSneaker) {
+        RemoteDataManager.shared.deleteFavorites(item: item, completion: {})
+    }
 
     var sneakersArray: [SneakerModel] = [
         CONSTANTS.sneakerModel,
@@ -80,6 +88,7 @@ class BrowseConstants {
     var secondaryCardHeight: CGFloat = 250
     var secondaryCardWidth: CGFloat = 150
     var categoriesArray: [ApparealCategorie] = [.sneakers, .slides, .beanies, .shirts, .collectibles]
+    var brandsArray: [ApparealsBrands] = [.adidas, .jordan, .newBalance, .nike, .yeezy, .others ]
 }
 
 

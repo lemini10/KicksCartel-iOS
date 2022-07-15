@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseDatabase
 import Combine
+import FirebaseAuth
 
 class RemoteDataManager {
     
@@ -70,9 +71,76 @@ class RemoteDataManager {
             })
         }
     }
+
+    func fetchLastSeenItems() -> Future<[FetchedSneaker], Error> {
+        return Future { promise in
+            var fetchedSneakers: [FetchedSneaker] = []
+            
+            self.ref.child("users").getData(completion:  { error, snapshot in
+                guard error == nil else {
+                    print(error!.localizedDescription)
+                    return
+                }
+                guard let json = snapshot?.value as? [String: Any] else { return }
+                for sneaker in json.keys {
+                    let id: String = sneaker
+                    let sneakerModel = json[id]
+                    do {
+                        let sneakerData = try JSONSerialization.data(withJSONObject: sneakerModel)
+                        let sneakerFetched = try self.decoder.decode(FetchedSneaker.self, from: sneakerData)
+                        fetchedSneakers.append(sneakerFetched)
+                    } catch {
+                        promise(.failure(error))
+                    }
+                }
+                promise(.success(fetchedSneakers))
+            })
+        }
+    }
+    
+    func fetchFavorites() -> Future<[FetchedSneaker], Error> {
+        return Future { promise in
+            var fetchedSneakers: [FetchedSneaker] = []
+            guard let userID = Auth.auth().currentUser?.uid else { return }
+            self.ref.child("users").child("\(userID)").child("Favorites").observe(DataEventType.value, with: { snapshot in
+                guard let json = snapshot.value as? [String: Any] else { return }
+                for sneaker in json.keys {
+                    let id: String = sneaker
+                    let sneakerModel = json[id]
+                    do {
+                        let sneakerData = try JSONSerialization.data(withJSONObject: sneakerModel)
+                        let sneakerFetched = try self.decoder.decode(FetchedSneaker.self, from: sneakerData)
+                        fetchedSneakers.append(sneakerFetched)
+                    } catch {
+                        promise(.failure(error))
+                    }
+                }
+                promise(.success(fetchedSneakers))
+            })
+        }
+    }
+    
+    func addToFavorites(item: FetchedSneaker) {
+        guard let userID = Auth.auth().currentUser?.uid else { return }
+        let encoder = JSONEncoder()
+        let path = self.ref.child("users").child("\(userID)").child("Favorites").child("\(item.id)")
+        do {
+            let data = try encoder.encode(item)
+            let json = try JSONSerialization.jsonObject(with: data)
+            path.setValue(json)
+        } catch {
+            print("Error while adding to favorites")
+        }
+    }
+    
+    func deleteFavorites(item: FetchedSneaker, completion: ()->Void?) {
+        guard let userID = Auth.auth().currentUser?.uid else { return }
+        self.ref.child("users").child("\(userID)").child("Favorites").child("\(item.id)").removeValue()
+        completion()
+    }
 }
 
-struct FetchedSneaker: Decodable, Identifiable {
+struct FetchedSneaker: Codable, Identifiable {
     var id: String { self.completeName }
     var brand: String
     var sneakerImage: String

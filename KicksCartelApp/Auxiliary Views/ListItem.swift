@@ -10,6 +10,8 @@ import SwiftUI
 struct ListItemView: View {
     
     var sneakerInfo: FetchedSneaker
+    var addToFavoritesClosure: (()->Void)?
+    var removeFromFavoritesClosure: (()->Void)?
     
     @State var isPressed = false
     
@@ -42,7 +44,7 @@ struct ListItemView: View {
                     .foregroundColor(.secondary)
                     .fontWeight(.black)
                 Spacer()
-                LikeButton(isPressed: isPressed)
+                LikeButton(addToFavoritesClosure: addToFavoritesClosure, removeFromFavoritesClosure: removeFromFavoritesClosure, isPressed: isPressed)
             }
         }
         .padding(10)
@@ -70,6 +72,8 @@ struct ListItemView: View {
 
 struct LikeButton : View {
     var darkMode: Bool? = false
+    var addToFavoritesClosure: (()->Void)?
+    var removeFromFavoritesClosure: (()->Void)?
     @State var isPressed = false
     var body: some View {
         ZStack {
@@ -81,6 +85,11 @@ struct LikeButton : View {
         }.font(.system(size: 20))
             .onTapGesture {
                 self.isPressed.toggle()
+                if isPressed {
+                    addToFavoritesClosure?()
+                } else {
+                    removeFromFavoritesClosure?()
+                }
         }
         .foregroundColor(isPressed ? .red : getForegroundColor())
     }
@@ -97,6 +106,7 @@ struct LikeButton : View {
 
 struct DeleteButton : View {
     @State var isPressed = false
+    let completion: (()->Void)?
     var body: some View {
         ZStack {
             Image(systemName: "trash.fill")
@@ -107,6 +117,7 @@ struct DeleteButton : View {
         }.font(.system(size: 20))
             .onTapGesture {
                 self.isPressed.toggle()
+                completion?()
         }
         .foregroundColor(isPressed ? .red : .black)
     }

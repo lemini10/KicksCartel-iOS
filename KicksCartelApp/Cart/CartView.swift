@@ -14,7 +14,7 @@ struct CartView: View {
     var body: some View {
         ScrollView {
             VStack {
-                CartItemView(sneakerInfo: FetchedSneaker(brand: "", sneakerImage: "", completeName: "", price: ""))
+                CartItemView(sneakerInfo: FetchedSneaker(brand: "", sneakerImage: "", completeName: "", price: ""), completion: {})
                 
                 Button("Checkout") {
                     viewModel.continueButtonPressed()
