@@ -9,20 +9,79 @@ import SwiftUI
 
 struct CheckoutView: View {
     
-    var model: CardModel
-    
+    @Environment(\.presentationMode) var presentationMode
+    @StateObject var viewModel: CheckoutViewModel
+
     let width: CGFloat = UIScreen.main.bounds.width
     let height: CGFloat = UIScreen.main.bounds.height
     
     var body: some View {
-        VStack {
-            ZStack {
-                gradientBackground
-                CardView(model: model)
+        ZStack {
+            gradientBackground
+            VStack {
+                navigationView
+                    .padding(.vertical,30)
+                HStack {
+                    Text("Checkout")
+                        .font(.system(.largeTitle,design: .monospaced))
+                        .fontWeight(.black)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 20)
+                    Spacer()
+                }
+                CardView(model: viewModel.model)
+                HStack {
+                    Text("Items")
+                        .font(.system(.largeTitle,design: .monospaced))
+                        .fontWeight(.black)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 20)
+                    Spacer()
+                }
+                List {
+                    ForEach(viewModel.items) { item in
+                        HStack(alignment: .center) {
+                            Image(item.sneakerImage)
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                            VStack(spacing: 5) {
+                                HStack {
+                                    Text(item.brand)
+                                    Spacer()
+                                }
+                                Text(item.completeName)
+                            }
+                            VStack {
+                                Text(item.price)
+                                Spacer()
+                            }
+                        }
+                    }
+                }
+                .frame(height: height * 0.45)
+                Button("Pay", action: {
+                    
+                })
+                Spacer()
             }
-            .frame(height: height * 0.4)
+        }
+    }
+    
+    var navigationView: some View {
+        HStack {
+            Button {
+                self.presentationMode.wrappedValue.dismiss()
+            } label: {
+                Image(systemName: "arrowshape.turn.up.backward.fill")
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .padding(.top, 35)
+                    .padding(.leading, 35)
+                    .foregroundColor(.white)
+            }
             Spacer()
         }
+        .frame(height: height * 0.05)
     }
     
     var gradientBackground: some View {
@@ -33,11 +92,6 @@ struct CheckoutView: View {
     }
 }
 
-struct CheckoutView_Previews: PreviewProvider {
-    static var previews: some View {
-        CardView(model: CardModel(type: .Credit, name: "Luis Lemini", maskedNumbers: "**** **** **** 0000"))
-    }
-}
 
 struct CardView: View {
     var model: CardModel

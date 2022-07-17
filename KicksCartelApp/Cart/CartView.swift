@@ -19,7 +19,7 @@ struct CartView: View {
             } else {
                 favoritesView
                     .fullScreenCover(isPresented: $viewModel.isDetailViewPresented) {
-                        CheckoutView(model: CardModel(type: .Credit, name: "Luis Lemini", maskedNumbers: "**** **** **** 0000"))
+                        CheckoutView(viewModel: CheckoutViewModel(items: viewModel.fetchedSneakers))
                     }
             }
             

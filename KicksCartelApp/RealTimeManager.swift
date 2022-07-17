@@ -178,10 +178,16 @@ class RemoteDataManager {
         self.ref.child("users").child("\(userID)").child("Cart").child("\(item.id)").removeValue()
         completion()
     }
+    
+    func purchaseItems(completion: ()->Void?) {
+        guard let userID = Auth.auth().currentUser?.uid else { return }
+        self.ref.child("users").child("\(userID)").child("Cart").removeValue()
+        completion()
+    }
 }
 
 struct FetchedSneaker: Codable, Identifiable {
-    var id: String { self.completeName }
+    var id: String { self.completeName + (self.size ?? "")}
     var brand: String
     var sneakerImage: String
     var completeName: String
