@@ -61,9 +61,6 @@ struct BrowseView: View {
                             .onTapGesture(perform: {
                                 browseViewModel.isDetailViewPresented = true
                             })
-                            .fullScreenCover(isPresented: $browseViewModel.isDetailViewPresented) {
-                                DetailShowView(viewModel: DetailViewModel(shoeDetails: CONSTANTS.sneakerModel))
-                            }
                     }
                 }
             }
@@ -89,7 +86,7 @@ struct BrowseView: View {
                                 browseViewModel.isDetailViewPresented = true
                             })
                             .fullScreenCover(isPresented: $browseViewModel.isDetailViewPresented) {
-                                DetailShowView(viewModel: DetailViewModel(shoeDetails: CONSTANTS.sneakerModel))
+                                DetailShowView(viewModel: DetailViewModel(shoeDetails: sneakerInfo.wrappedValue))
                             }
                     }
                 }
@@ -111,9 +108,6 @@ struct BrowseView: View {
                             .onTapGesture(perform: {
                                 browseViewModel.isDetailViewPresented = true
                             })
-                            .fullScreenCover(isPresented: $browseViewModel.isDetailViewPresented) {
-                                DetailShowView(viewModel: DetailViewModel(shoeDetails: CONSTANTS.sneakerModel))
-                            }
                     }
                 }
             }

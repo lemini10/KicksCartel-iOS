@@ -10,17 +10,43 @@ import Combine
 
 struct CartView: View {
     
-    @ObservedObject var viewModel: CartViewModel
+    @StateObject var viewModel: CartViewModel
+
     var body: some View {
-        ScrollView {
-            VStack {
-                CartItemView(sneakerInfo: FetchedSneaker(brand: "", sneakerImage: "", completeName: "", price: ""), completion: {})
-                
+        ZStack {
+            if viewModel.fetchedSneakers.isEmpty {
+                emptyViewSkeleton
+            } else {
+                favoritesView
+            }
+        }
+        .onAppear(perform: {
+            viewModel.onAppear()
+        })
+    }
+    
+    var emptyViewSkeleton: some View {
+        VStack {
+            Image(systemName: "star")
+            Text("Add items to your wish list")
+        }
+    }
+    
+    var favoritesView: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack(spacing: 10) {
+                ForEach($viewModel.fetchedSneakers) { sneakerInfo in
+                    CartItemView(sneakerInfo: sneakerInfo.wrappedValue, completion: {
+                        viewModel.deleteItem(sneakerInfo.wrappedValue)
+                    })
+                        .padding(.horizontal)
+                }
                 Button("Checkout") {
                     viewModel.continueButtonPressed()
                 }
+                .padding(.top)
             }
         }
-        .padding()
+        .padding(.top, 25)
     }
 }

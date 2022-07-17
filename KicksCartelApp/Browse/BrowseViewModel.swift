@@ -63,23 +63,6 @@ class BrowseViewModel: BrowseViewModelProtocol {
     func removeFromFavorites(item: FetchedSneaker) {
         RemoteDataManager.shared.deleteFavorites(item: item, completion: {})
     }
-
-    var sneakersArray: [SneakerModel] = [
-        CONSTANTS.sneakerModel,
-        CONSTANTS.sneakerModel,
-        CONSTANTS.sneakerModel,
-        CONSTANTS.sneakerModel,
-        CONSTANTS.sneakerModel,
-        CONSTANTS.sneakerModel,
-        CONSTANTS.sneakerModel,
-    ]
-    
-    var newsArray: [NewsModel] = [NewsModel(image: "Guava", title: "Jordan Chicago Restocking 2022", details: "Nike"),
-                                  NewsModel(image: "Guava", title: "Jordan Chicago Restocking 2022", details: "Nike"),
-                                  NewsModel(image: "Guava", title: "Jordan Chicago Restocking 2022", details: "Nike"),
-                                  NewsModel(image: "Guava", title: "Jordan Chicago Restocking 2022", details: "Nike"),
-                                  NewsModel(image: "Guava", title: "Jordan Chicago Restocking 2022", details: "Nike")
-    ]
 }
 
 class BrowseConstants {

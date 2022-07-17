@@ -24,8 +24,10 @@ struct DetailShowView: View {
                 detailsView
             }
             SizesSlideUpModal(isOpen: $viewModel.sizeSlideUpPresented, data: ShoeSizes.man, selectedSizeAction: { selectedSize in
-                print(selectedSize)
                 viewModel.sizeSlideUpPresented = false
+                var item = viewModel.shoeDetails
+                item.size = selectedSize
+                RemoteDataManager.shared.addToCart(item: item)
             })
             
         }
@@ -77,11 +79,16 @@ struct DetailShowView: View {
                     }
                 }
                 TabView {
-                    ForEach(viewModel.shoeDetails.imageSet, id: \.self) { imageSelected in
-                        Image(imageSelected)
-                            .resizable()
-                            .scaledToFit()
-                    }
+                    Image(viewModel.shoeDetails.imageSet.firstImage)
+                        .resizable()
+                        .scaledToFit()
+                    Image(viewModel.shoeDetails.imageSet.secondImage)
+                        .resizable()
+                        .scaledToFit()
+                    Image(viewModel.shoeDetails.imageSet.thirdImage)
+                        .resizable()
+                        .scaledToFit()
+                    
                 }
                 .tabViewStyle(PageTabViewStyle())
             }
@@ -90,7 +97,11 @@ struct DetailShowView: View {
     
     var buttonsView: some View {
         HStack {
-            LikeButton(darkMode: true)
+            LikeButton(darkMode: true, addToFavoritesClosure: {
+                RemoteDataManager.shared.addToFavorites(item: viewModel.shoeDetails)
+            }, removeFromFavoritesClosure: {
+                RemoteDataManager.shared.deleteFavorites(item: viewModel.shoeDetails, completion: {})
+            })
                 .frame(width: 50, height: 50, alignment: .center)
                 .background(Color.s800)
                 .cornerRadius(15)
@@ -118,21 +129,19 @@ struct DetailShowView: View {
     var imageView: some View {
         VStack {
             TabView {
-                ForEach(viewModel.shoeDetails.imageSet, id: \.self) { imageSelected in
-                    Image(imageSelected)
-                        .resizable()
-                        .scaledToFit()
-                }
+                Image(viewModel.shoeDetails.imageSet.firstImage)
+                    .resizable()
+                    .scaledToFit()
+                Image(viewModel.shoeDetails.imageSet.secondImage)
+                    .resizable()
+                    .scaledToFit()
+                Image(viewModel.shoeDetails.imageSet.thirdImage)
+                    .resizable()
+                    .scaledToFit()
             }
             .tabViewStyle(PageTabViewStyle())
             .frame(height: UIScreen.main.bounds.size.height * 0.5)
             Spacer()
         }
-    }
-}
-
-struct DetailShowView_Previews: PreviewProvider {
-    static var previews: some View {
-        DetailShowView(viewModel: DetailViewModel(shoeDetails: CONSTANTS.sneakerModel))
     }
 }

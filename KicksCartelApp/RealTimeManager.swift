@@ -138,6 +138,46 @@ class RemoteDataManager {
         self.ref.child("users").child("\(userID)").child("Favorites").child("\(item.id)").removeValue()
         completion()
     }
+
+    func fetchCartItems() -> Future<[FetchedSneaker], Error> {
+        return Future { promise in
+            var fetchedSneakers: [FetchedSneaker] = []
+            guard let userID = Auth.auth().currentUser?.uid else { return }
+            self.ref.child("users").child("\(userID)").child("Cart").observe(DataEventType.value, with: { snapshot in
+                guard let json = snapshot.value as? [String: Any] else { return }
+                for sneaker in json.keys {
+                    let id: String = sneaker
+                    let sneakerModel = json[id]
+                    do {
+                        let sneakerData = try JSONSerialization.data(withJSONObject: sneakerModel)
+                        let sneakerFetched = try self.decoder.decode(FetchedSneaker.self, from: sneakerData)
+                        fetchedSneakers.append(sneakerFetched)
+                    } catch {
+                        promise(.failure(error))
+                    }
+                }
+                promise(.success(fetchedSneakers))
+            })
+        }
+    }
+    func addToCart(item: FetchedSneaker) {
+        guard let userID = Auth.auth().currentUser?.uid else { return }
+        let encoder = JSONEncoder()
+        let path = self.ref.child("users").child("\(userID)").child("Cart").child("\(item.id)")
+        do {
+            let data = try encoder.encode(item)
+            let json = try JSONSerialization.jsonObject(with: data)
+            path.setValue(json)
+        } catch {
+            print("Error while adding to favorites")
+        }
+    }
+    
+    func deleteCart(item: FetchedSneaker, completion: ()->Void?) {
+        guard let userID = Auth.auth().currentUser?.uid else { return }
+        self.ref.child("users").child("\(userID)").child("Cart").child("\(item.id)").removeValue()
+        completion()
+    }
 }
 
 struct FetchedSneaker: Codable, Identifiable {
@@ -146,6 +186,15 @@ struct FetchedSneaker: Codable, Identifiable {
     var sneakerImage: String
     var completeName: String
     var price: String
+    var description: String
+    var imageSet: ImageSet
+    var size: String?
+}
+
+struct ImageSet: Codable {
+    var firstImage: String
+    var secondImage: String
+    var thirdImage: String
 }
 
 struct FetchedNews: Decodable, Identifiable {

@@ -1,13 +1,13 @@
 //
-//  CartItemView.swift
+//  SearchableRow.swift
 //  KicksCartelApp
 //
-//  Created by Luis Roberto Blancas Lemini on 19/03/22.
+//  Created by Luis Roberto Blancas Lemini on 16/07/22.
 //
 
 import SwiftUI
 
-struct CartItemView: View {
+struct SearchableRow: View {
     
     var sneakerInfo: FetchedSneaker
     let completion: (()->Void)?
@@ -21,10 +21,6 @@ struct CartItemView: View {
         }
         .frame(height:140)
         .cornerRadius(15)
-        .overlay(
-            RoundedRectangle(cornerRadius: 15)
-                .stroke(Color(.sRGB, red: 150/255, green: 150/255, blue: 150/255,
-                              opacity: 0.3), lineWidth: 3))
     }
     
     //MARK:- Auxiliary Views
@@ -47,24 +43,7 @@ struct CartItemView: View {
                 Text(sneakerInfo.completeName)
                     .font(.system(.body,design: .rounded))
                     .fontWeight(.black)
-                    .lineLimit(2)
-                
-                HStack {
-                    if let size: String = sneakerInfo.size {
-                        Text(size)
-                            .font(.system(.body))
-                            .fontWeight(.black)
-                            .foregroundColor(.secondary)
-                            .lineLimit(1)
-                    }
-                    Spacer()
-                    DeleteButton(completion: {
-                        completion?()
-                    })
-                        .padding(.trailing, 10)
-                    
-                }
-                
+                    .lineLimit(3)
             }
             Spacer()
         }

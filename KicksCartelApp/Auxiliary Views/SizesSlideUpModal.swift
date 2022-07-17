@@ -11,6 +11,7 @@ import Combine
 struct SizesSlideUpModal: View {
     
     @Binding var isOpen: Bool
+    var completion: (()->Void)?
     
     let data: [ShoeInfo]
     let columns = [

@@ -10,11 +10,11 @@ import Combine
 
 class DetailViewModel: ObservableObject {
     
-    var shoeDetails: SneakerModel
+    var shoeDetails: FetchedSneaker
     @Published var sizeSlideUpPresented: Bool = false
     let constants: Constants = Constants()
     
-    init(shoeDetails: SneakerModel) {
+    init(shoeDetails: FetchedSneaker) {
         self.shoeDetails = shoeDetails
     }
 }
