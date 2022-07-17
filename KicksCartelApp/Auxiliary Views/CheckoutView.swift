@@ -11,12 +11,17 @@ struct CheckoutView: View {
     
     var model: CardModel
     
+    let width: CGFloat = UIScreen.main.bounds.width
+    let height: CGFloat = UIScreen.main.bounds.height
+    
     var body: some View {
         VStack {
             ZStack {
                 gradientBackground
+                CardView(model: model)
             }
-            
+            .frame(height: height * 0.4)
+            Spacer()
         }
     }
     
@@ -36,12 +41,28 @@ struct CheckoutView_Previews: PreviewProvider {
 
 struct CardView: View {
     var model: CardModel
+    
+    let width: CGFloat = UIScreen.main.bounds.width
+    let height: CGFloat = UIScreen.main.bounds.height
+    
     var body: some View {
-        VStack {
-            Text(model.type.rawValue)
+        VStack(alignment: .leading) {
+            HStack {
+                Text(model.type.rawValue)
+                    .padding(.leading,25)
+                    .padding(.top, 25)
+                Spacer()
+            }
+            Spacer()
             Text(model.name)
+                .padding(.leading,25)
             Text(model.maskedNumbers)
+                .padding(.leading,25)
+                .padding(.bottom, 25)
         }
+        .frame(width: width * 0.8, height: height * 0.2)
+        .background(Color.white)
+        .cornerRadius(25)
     }
 }
 

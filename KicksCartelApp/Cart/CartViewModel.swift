@@ -41,6 +41,6 @@ class CartViewModel: ObservableObject {
     }
 
     func continueButtonPressed() {
-        
+        isDetailViewPresented = true
     }
 }
